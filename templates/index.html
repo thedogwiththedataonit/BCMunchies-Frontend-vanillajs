@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script type="text/javascript" src="/static/js/app.js"></script>
+    <link rel="icon" href="/static/img/bclogo.png" />
+    <title>BC Munchies</title>
+    
+</head>
+<body>
+    <div class="header">
+        <img class="clearpng" src="/static/img/clearpng.png">
+        <img class="munchieslogo" src="/static/img/munchies2.png" alt="logo" />
+        <img class="bclogo" src="/static/img/BClogo.png" alt="bclogo" />
+    </div>
+    
+    <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+    <label for="openSidebarMenu" class="sidebarIconToggle">
+        <div class="spinner diagonal part-1"></div>
+        <div class="spinner horizontal"></div>
+        <div class="spinner diagonal part-2"></div>
+    </label>
+
+    <div id="sidebarMenu">
+        <ul class="sidebarMenuInner">
+            <li>Jelena Jovanovic <span>Web Developer</span></li>
+        
+        </ul>
+    </div>
+  
+</body>
+</html>
