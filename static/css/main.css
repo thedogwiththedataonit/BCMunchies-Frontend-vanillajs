@@ -77,7 +77,7 @@ body {
   letter-spacing: 1.25px;
 }
 #sidebarMenu {
-  height: 100%;
+  height: auto;
   top: 0;
   position: absolute;
   left: 0;
@@ -703,7 +703,7 @@ li {
   width: 90%;
   max-width: 600px;
   background: #fff;
-  top:10%;
+  top: 10%;
   margin: 3em auto 4em;
   cursor: auto;
   border-radius: 0.25em;
@@ -1049,6 +1049,41 @@ li {
   display: flex;
   flex-direction: column;
 }
+
+.signingoogle {
+  width: 100%;
+  height: 47px;
+  background-color: dodgerblue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 2px;
+  cursor: pointer;
+}
+.signingoogle:hover {
+  background-color: #0067ce;
+}
+.googleimgbox {
+  width: 43px;
+  height: 43px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.googlelogo {
+  width: 30px;
+  height: 30px;
+}
+.googleboxtext {
+  margin: 0 auto;
+  color: #fff;
+  padding-right: 40px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 /* less than 1080px width */
 @media screen and (max-width: 1080px) {
   .isometric1 {
@@ -1121,4 +1156,20 @@ li {
     padding-top: 20%;
     border-right: 2px solid #ffffff;
   }
+}
+
+.signoutbox {
+  position: relative;
+  width: 100%;
+  height: 20%;
+  top: 5%;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.signoutbutton {
+  color: dodgerblue;
+  cursor: pointer;
 }

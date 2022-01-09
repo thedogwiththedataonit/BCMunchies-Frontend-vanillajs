@@ -17,6 +17,9 @@ def main():
 def order():
     return render_template('test.html')
 
-    
+@application.route('/terms')
+def terms():
+    return render_template('terms.html')
+
 if __name__ == "__main__":
-    application.run(debug=True)
+    application.run(debug=True, host='0.0.0.0', port=5000)
