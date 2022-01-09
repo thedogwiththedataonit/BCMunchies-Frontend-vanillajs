@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script type="text/javascript" defer src="/static/js/app.js"></script>
     <link rel="icon" href="/static/img/bclogo.png" />
+    <link rel="shortcut icon" href="/static/img/bclogo.png">
     <title>BC Munchies</title>
 
     
@@ -123,7 +124,7 @@
                     <p class="fieldset">
                         <input class="full-width has-padding" type="submit" value="Create account">
                     </p>
-                    <div class="signingoogle" id="signinbtn">
+                    <div class="signingoogle" id="signupbtn">
                         <div class="googleimgbox">
                             <img src="/static/img/google.png" class="googlelogo">
                         </div>
@@ -240,7 +241,10 @@
         const provider = new firebase.auth.GoogleAuthProvider();
 
         const signinbtn = document.getElementById("signinbtn");
+        const signupbtn = document.getElementById("signupbtn");
         const signoutbtn = document.getElementById("signout");
+
+        signupbtn.onclick = () => auth.signInWithPopup(provider); //await response then show a popup
         signinbtn.onclick = () => auth.signInWithPopup(provider);
         signoutbtn.onclick = () => auth.signOut();
 
