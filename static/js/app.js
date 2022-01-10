@@ -159,14 +159,15 @@ function signinEmail(){
     console.log(email);
     console.log(password);
     var auth = firebase.auth();
-    var promise = auth.signInWithEmailAndPassword(email, password);
-    //if error then display error
+    var promise = auth.signInWithEmailAndPassword(email, password).then(function(){
+      modal = document.getElementById("loginmodal");
+      modal.className = "user-modal";
+      return alert("You have successfully logged in!");
+    }).catch(function(error){
+      alert(error.message);
+    });
     promise.catch(e => console.log(e.message));
 
-    //change the id="loginmodal" class to user-modal
-    modal = document.getElementById("loginmodal");
-    modal.className = "user-modal";
-    return alert("You have successfully logged in!");
 }
 
 function signupEmail(){
@@ -179,6 +180,9 @@ function signupEmail(){
 
     var auth = firebase.auth();
     var promise = auth.createUserWithEmailAndPassword(email, password).then(function(result) {
+      modal = document.getElementById("loginmodal");
+      modal.className = "user-modal";
+      alert("Account Created!");
       return result.user.updateProfile({
         displayName: username
       })
@@ -187,10 +191,10 @@ function signupEmail(){
     });
     //if error then display error
     promise.catch(e => console.log(e.message));
-
-    modal = document.getElementById("loginmodal");
-    modal.className = "user-modal";
-    return alert("Account Created!");
 }
 
+function getUsername(){
+  var user = firebase.auth().currentUser;
+  return user.displayName;
+}
 
