@@ -223,8 +223,24 @@ body[0].onload = function(){
   }
   ).catch(function(error){
     console.log(error);
+  });
+
+  var current_cart = localStorage.getItem('cart');
+  console.log(current_cart);
+  var cartnum = document.getElementById("cartnum");
+  if(current_cart == null){
+    cartnum.innerText = 0;
+    return 0;
   }
-  );
+  else{
+    current_cart = JSON.parse(current_cart);
+    var cartvaluenum = 0;
+    for(var i = 0; i < current_cart.length; i++){
+      cartvaluenum += current_cart[i].qty;
+    }
+    cartnum.innerText = cartvaluenum;
+    return cartvaluenum;
+  }
 }
 
 
@@ -241,6 +257,14 @@ function addtocart(id){
 
   var cartnum = document.getElementById("cartnum");
   cartnum.innerText = parseInt(cartnum.innerText) + 1;
+
+  var itemnotif = document.getElementById("itemaddedpopup");
+  itemnotif.className = "itemaddedpopup visible";
+  setTimeout(function(){
+    itemnotif.className = "itemaddedpopup";
+  }, 2000);
+
+  
 
   if(current_cart == null){
     current_cart = [

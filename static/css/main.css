@@ -728,7 +728,54 @@ a.bttn-two {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.itemaddedpopup {
+  position: fixed;
+  top: 75px;
+  right: 0;
+  width: 12%;
+  height: 6%;
+  background: rgba(29, 175, 0, 0.692);
+  z-index: 99999;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+.itemaddedpopup.visible {
+  position: fixed;
+  top: 75px;
+  right: 0;
+  width: 12%;
+  height: 6%;
+  background: rgba(29, 175, 0, 0.692);
+  z-index: 99999;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
 
+  animation: 1s fadeIn;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.itemaddedpopuptitle {
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  text-align: center;
+}
 ul,
 li {
   margin: 0;

@@ -19,10 +19,24 @@ body.onload = () => {
             //add user.displayName to id="username"
             username.innerHTML = user.displayName;
             usernameCheckout.innerHTML = `Order for ${user.displayName.split(" ")[0]}`;
+
         }
         else {
             console.log("not logged in");
             username.innerHTML = "Not logged in";
+            username.onmouseenter = () => {
+                username.innerHTML = "Login";
+                username.style="cursor: pointer;";
+            
+            }
+            username.onmouseleave = () => {
+                username.innerHTML = "Not logged in";
+            }
+            username.onclick = () => {
+                document.getElementById("loginmodal").className = "user-modal is-visible";
+                //click on sign in tab
+                document.getElementById("tab-signin").click();
+            }
         
         }
     });
