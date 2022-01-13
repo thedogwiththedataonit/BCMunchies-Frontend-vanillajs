@@ -9,14 +9,15 @@ jQuery(document).ready(function($){
       $forgot_password_link = $form_login.find('.form-bottom-message a'),
       $back_to_login_link = $form_forgot_password.find('.form-bottom-message a'),
       $main_nav = $('.main-nav');
-
+      $mainlogin = $('.mainlogin');
     //open modal
     $main_nav.on('click', function(event){
   
       if( $(event.target).is($main_nav) ) {
         // on mobile open the submenu
         $(this).children('ul').toggleClass('is-visible');
-      } else {
+      } 
+      else {
         // on mobile close submenu
         $main_nav.children('ul').removeClass('is-visible');
         //show modal layer
@@ -26,7 +27,8 @@ jQuery(document).ready(function($){
       }
   
     });
-  
+
+    
     //close modal
     $('.user-modal').on('click', function(event){
       if( $(event.target).is($form_modal) || $(event.target).is('.close-form') ) {
@@ -193,8 +195,75 @@ function signupEmail(){
     promise.catch(e => console.log(e.message));
 }
 
-function getUsername(){
-  var user = firebase.auth().currentUser;
-  return user.displayName;
+
+//onload, wait for function call to /menu 
+
+body = document.getElementsByTagName("body");
+body[0].onload = function(){
+  fetch("/api/menu").then(function(response){
+    return response.json();
+  }
+  ).then(function(data){
+    console.log(data);
+
+    //for length in data, create a label 
+    
+    for(var i = 0; i < data.length; i++){
+      var label = document.createElement("label");
+      label.setAttribute("for", `t-${i+1}`);
+      label.setAttribute("class", "item");
+      label.setAttribute("id", data[i].id);
+
+      label.innerHTML = `<img src="/static/img/${data[i].img}"/><p>${data[i].name}</p><a class="bttn-two" onclick="addtocart('${data[i].id}')">Add</a>`;
+
+      //append label to menu
+      document.getElementById("menu").appendChild(label);
+    }
+    
+  }
+  ).catch(function(error){
+    console.log(error);
+  }
+  );
+}
+
+
+const mainlogin = document.getElementById("mainlogin");
+mainlogin.addEventListener("click", function(){
+  document.getElementById("loginmodal").className = "user-modal is-visible";
+  //click on sign in tab
+  document.getElementById("tab-signin").click();
+}
+);
+
+function addtocart(id){
+  var current_cart = localStorage.getItem('cart');
+
+  var cartnum = document.getElementById("cartnum");
+  cartnum.innerText = parseInt(cartnum.innerText) + 1;
+
+  if(current_cart == null){
+    current_cart = [
+      {'id': id, 'qty': 1}
+    ];
+    localStorage.setItem('cart', JSON.stringify(current_cart));
+  }
+  else{
+    current_cart = JSON.parse(current_cart);
+    var found = false;
+    for(var i = 0; i < current_cart.length; i++){
+      if(current_cart[i].id == id){
+        current_cart[i].qty++;
+        found = true;
+        localStorage.setItem('cart', JSON.stringify(current_cart));
+      }
+    }
+    if(!found){
+      current_cart.push({'id': id, 'qty': 1});
+      localStorage.setItem('cart', JSON.stringify(current_cart));
+    }
+
+  }
+  
 }
 

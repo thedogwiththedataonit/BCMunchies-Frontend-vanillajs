@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/order.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script type="module" src="/static/modules/auth_order.js"></script>
+    <script type="module" src="/static/modules/order.js"></script>
+    <script type="text/javascript" defer src="/static/js/orderpage.js"></script>
+    <title>BC Munchies Order</title>
+    <link rel="shortcut icon" href="/static/img/bclogo.png">
+
+
+</head>
+<body onload="itemLoad();"> 
+    <div class="header">
+        <p id="username" class="headerName"></p>
+        <img class="clearpng" src="/static/img/clearpng.png">
+        <img class="munchieslogo" src="/static/img/munchies2.png" alt="logo" onclick="window.location.href='/'" />
+        <div class="ordericon">
+            
+            <img class="bclogo" src="/static/img/BClogo.png" alt="bclogo" />
+        </div>
+        
+    </div>
+
+    <div class="orderpagebox">
+
+        <div class="leftbox">
+
+            <div class="leftboxheader">
+                <h2 id="usernameCheckout" class="orderFor"></h2>
+            </div>
+
+            <p> Order Summary</p>
+
+            <table>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                </tr>
+                <tr>
+                  <td>Test1</td>
+                  <td>$10.00</td>
+                </tr>
+                <tr>
+                  <td>Test2</td>
+                  <td>$15.00</td>
+                </tr>
+              </table>
+        </div>
+
+        <div class="rightbox">
+            <ul class="orderitems" id="orderitems">
+                
+            </ul>
+
+            <button onclick="clearCart();">Clear Cart</button>
+        </div>
+    </div>
+
+    
+</body>
+</html>

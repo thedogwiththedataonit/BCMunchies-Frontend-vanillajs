@@ -10,6 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script type="module" src="/static/modules/auth.js"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script type="text/javascript" defer src="/static/js/app.js"></script>
@@ -22,10 +23,10 @@
 <body>
     <div class="header">
         <img class="clearpng" src="/static/img/clearpng.png">
-        <img class="munchieslogo" src="/static/img/munchies2.png" alt="logo" />
-        <div class="ordericon" onclick="window.location.href='/order'">
-            <span class="ordericonnum"> 2 </span>
-            <img class="bclogo" src="/static/img/BClogo.png" alt="bclogo" />
+        <img class="munchieslogo" src="/static/img/munchies2.png" alt="logo">
+        <div class="ordericon" id="orderbutton">
+            <span class="ordericonnum" id="cartnum">0</span>
+            <img class="bclogo" src="/static/img/BClogo.png" alt="bclogo"/>
         </div>
         
     </div>
@@ -54,7 +55,7 @@
     <div class="user-modal" id="loginmodal">
         <div class="user-modal-container">
             <ul class="switcher">
-                <li><a href="#0">Sign in</a></li>
+                <li><a id="tab-signin" href="#0">Sign in</a></li>
                 <li><a href="#0">New account</a></li>
             </ul>
 
@@ -167,7 +168,7 @@
         <div class="displaycard">
             <h1 class="boxh1">Straight bussin food</h1>
             <h2 class="boxh2">anywhere on campus</h2>
-            <a href="#0" style="margin-left:5%;" class="bttn">Order Now</a>
+            <a style="margin-left:5%;" class="bttn" id="mainlogin">Login</a>
         </div>
         <img class="isometric1" src="/static/img/isometric1.png" alt="isometric1" />
     </div>
@@ -182,34 +183,49 @@
             <input type="radio" name="testimonial" id="t-4"/>
             <input type="radio" name="testimonial" id="t-5"/>
 
-            <div class="testimonials">
-                <label class="item" for="t-1">
-                    <img src="https://wallpapercave.com/wp/wp6573211.jpg" alt="picture"/>
+            <div class="testimonials" id="menu">
+                <!--
+                <label class="item" for="t-1" id="testfood1">
+                    <img src='/static/img/testfood1.png' alt="picture"/>
                     <p>testfood 1</p>
                     <a href="#0" class="bttn-two">Order</a>
                 </label>
-                <label class="item" for="t-2">
-                    <img src="https://wallpapercave.com/wp/wp3053211.jpg" alt="picture"/>
+                <label class="item" for="t-2" id="testfood2">
+                    <img src='/static/img/testfood2.png' alt="picture"/>
                     <p>testfood 2</p>
                     <a href="#0" class="bttn-two">Order</a>
                 </label>
-                <label class="item" for="t-3">
-                    <img src="https://wallpapercave.com/wp/wp8593886.jpg" alt="picture"/>
+                <label class="item" for="t-3" id="testfood3">
+                    <img src='/static/img/testfood3.png' alt="picture"/>
                     <p>testfood 3</p>
                     <a href="#0" class="bttn-two">Order</a>
                 </label>
-                <label class="item" for="t-4">
-                    <img src="https://wallpapercave.com/wp/wp3053215.jpg" alt="picture"/>
+                <label class="item" for="t-4" id="testfood4">
+                    <img src='/static/img/testfood4.png' alt="picture"/>
                     <p>testfood 4</p>
                     <a href="#0" class="bttn-two">Order</a>
                 </label>
-                <label class="item" for="t-5">
-                    <img src="https://wallpapercave.com/wp/wp8593867.jpg" alt="picture"/>
+                <label class="item" for="t-5" id="testfood5">
+                    <img src='/static/img/testfood5.png' alt="picture"/>
                     <p>testfood 5</p>
                     <a href="#0" class="bttn-two">Order</a>
                 </label>
+                -->
+
+                <div class="loader">
+                    <div class="square" id="sq1"></div>
+                    <div class="square" id="sq2"></div>
+                    <div class="square" id="sq3"></div>
+                    <div class="square" id="sq4"></div>
+                    <div class="square" id="sq5"></div>
+                    <div class="square" id="sq6"></div>
+                    <div class="square" id="sq7"></div>
+                    <div class="square" id="sq8"></div>
+                    <div class="square" id="sq9"></div>
+                </div>
             </div>
 
+            
             <div class="dots">
                 <label for="t-1"></label>
                 <label for="t-2"></label>
@@ -227,48 +243,6 @@
         <a class="signoutbutton" id="signout">Sign out</a>
     </div>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyAwDM2bpJv-Cf8QMvmN69H1LagIqpzBHEk",
-          authDomain: "bc-munchies-dev.firebaseapp.com",
-          projectId: "bc-munchies-dev",
-          storageBucket: "bc-munchies-dev.appspot.com",
-          messagingSenderId: "970170987232",
-          appId: "1:970170987232:web:4695ef3ec353096e659685"
-        };
-        
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const provider = new firebase.auth.GoogleAuthProvider();
-
-        const signinbtn = document.getElementById("signinbtn");
-        const signupbtn = document.getElementById("signupbtn");
-        const signoutbtn = document.getElementById("signout");
-
-        signupbtn.onclick = () => auth.signInWithPopup(provider); //await response then show a popup
-        signinbtn.onclick = () => auth.signInWithPopup(provider);
-        signoutbtn.onclick = () => auth.signOut();
-
-        const username = document.getElementById("username");
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                console.log(user);
-                username.innerHTML = `${user.displayName} is signed in as ${user.email} => ${user.uid}`;; 
-            } else {
-                console.log("not logged in");
-                username.innerHTML = "Not logged in";
-            }
-        });
-
-        
-
-
-    </script>
+   
 </body>
 </html>

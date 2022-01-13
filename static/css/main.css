@@ -131,7 +131,7 @@ input[type="checkbox"] {
   transition: all 0.3s;
   box-sizing: border-box;
   cursor: pointer;
-  position: absolute;
+  position: fixed;
   z-index: 120;
   height: 100%;
   width: 100%;
@@ -186,8 +186,90 @@ input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   margin-top: -9px;
 }
 
+@keyframes loader {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  top: 30%;
+  left: 50%;
+  margin-top: -25px;
+  margin-left: -50px;
+  position: absolute;
+}
+
+.square {
+  background: linear-gradient(
+    101deg,
+    rgba(193, 27, 27, 1) 26%,
+    rgba(212, 133, 14, 0.838) 87%
+  );
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -5px;
+  margin-left: -5px;
+}
+
+#sq1 {
+  margin-top: -60px;
+  margin-left: -60px;
+  animation: loader 675ms ease-in-out 0s infinite alternate;
+}
+
+#sq2 {
+  margin-top: -60px;
+  animation: loader 675ms ease-in-out 75ms infinite alternate;
+}
+
+#sq3 {
+  margin-top: -60px;
+  margin-left: 30px;
+  animation: loader 675ms ease-in-out 150ms infinite;
+}
+
+#sq4 {
+  margin-left: -60px;
+  animation: loader 675ms ease-in-out 225ms infinite;
+}
+
+#sq5 {
+  animation: loader 675ms ease-in-out 300ms infinite;
+}
+
+#sq6 {
+  margin-left: 30px;
+  animation: loader 675ms ease-in-out 375ms infinite;
+}
+
+#sq7 {
+  margin-top: 30px;
+  margin-left: -60px;
+  animation: loader 675ms ease-in-out 450ms infinite;
+}
+
+#sq8 {
+  margin-top: 30px;
+  animation: loader 675ms ease-in-out 525ms infinite;
+}
+
+#sq9 {
+  margin-top: 30px;
+  margin-left: 30px;
+  animation: loader 675ms ease-in-out 600ms infinite;
+}
+
 .container-body {
-  margin: 0 0 0 0;
+  margin: 0 0 3% 0;
   padding-top: 5%;
   width: 100%;
   height: 55vh;
@@ -199,7 +281,7 @@ input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   margin: 3% 15% 0 0%;
   width: 75%;
   background-color: rgba(114, 0, 0, 0.836);
-  height: 75%;
+  height: 85%;
   border-radius: 30px;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.6);
 }
@@ -308,8 +390,6 @@ input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 .testimonials .item img {
   width: 300px;
   height: 200px;
-  border-radius: 50%;
-  border: 5px solid #ffffff;
 }
 .testimonials .item p {
   color: rgb(34, 34, 34);
@@ -478,6 +558,7 @@ a.bttn {
   -webkit-transition: 0.3s all ease;
   transition: 0.3s ease all;
   border-radius: 20px;
+  cursor: pointer;
 }
 a.bttn:hover,
 a.bttn-two:hover,
@@ -947,6 +1028,7 @@ li {
   line-height: 1.4;
   text-align: center;
 }
+
 @media only screen and (min-width: 600px) {
   .form-message {
     padding: 2em 2em 0;
@@ -1113,10 +1195,10 @@ li {
     margin-bottom: 0;
   }
   .displaycard {
-    margin: 13% 0% 0 0%;
+    margin: 13% 0% 0% 0%;
     width: 85%;
     background-color: rgba(114, 0, 0, 0.836);
-    height: 83%;
+    height: 85%;
     border-radius: 30px;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.6);
   }
@@ -1137,8 +1219,6 @@ li {
   .testimonials .item img {
     width: 200px;
     height: 150px;
-    border-radius: 50%;
-    border: 5px solid #ffffff;
   }
   #sidebarMenu {
     height: 100%;
