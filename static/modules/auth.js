@@ -20,7 +20,8 @@ const provider = new firebase.auth.GoogleAuthProvider();
 const signinbtn = document.getElementById("signinbtn");
 const signupbtn = document.getElementById("signupbtn");
 const signoutbtn = document.getElementById("signout");
-
+const nameline = document.getElementById("nameline");
+const noteline = document.getElementById("noteline");
 
 signupbtn.onclick = () => auth.signInWithPopup(provider); //await response then show a popup
 signinbtn.onclick = () => auth.signInWithPopup(provider);
@@ -30,14 +31,21 @@ const username = document.getElementById("username");
 
 auth.onAuthStateChanged(user => {
             if (user) {
+                //remove "is-visible" class from login modal
+                document.getElementById("loginmodal").className = "user-modal";
+                //slide in and out confirmed
                 console.log(user);
                 username.innerHTML = `${user.displayName} is signed in as ${user.email} => ${user.uid}`;
-                
+                nameline.innerText = `Hey, ${user.displayName}!`;
+                noteline.innerText = "Lets get ordering.";
+
                 
             } else {
                 console.log("not logged in");
                 username.innerHTML = "Not logged in";
-               
+                nameline.innerText = "Fast and Simple.";
+                noteline.innerText = "Just for BC.";
+                
             }
 });
 

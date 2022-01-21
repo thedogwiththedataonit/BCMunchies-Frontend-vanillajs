@@ -33,6 +33,7 @@
     <div class="itemaddedpopup" id="itemaddedpopup">
         <h2 class="itemaddedpopuptitle">Item Added</h2>
     </div>
+
     <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
     <label for="openSidebarMenu" class="sidebarIconToggle">
         <div class="spinner diagonal part-1"></div>
@@ -166,85 +167,110 @@
         </div>
     </div>
 
-    <div class="container-body">
-        <div class="displaycard">
-            <h1 class="boxh1">Straight bussin food</h1>
-            <h2 class="boxh2">anywhere on campus</h2>
-            <a style="margin-left:5%;" class="bttn" id="mainlogin">Login</a>
+    <div class="maincontent">
+        <div class="leftmaincontent">
+        
+            <div class="container-body">
+                <div class="displaycard">
+                    <h1 id="nameline" class="boxh1">Straight bussin food</h1>
+                    <h2 id="noteline" class="boxh2">anywhere on campus</h2>
+                    <a style="margin:0 0 0 5%;" class="bttn" id="mainlogin">Login</a>
+                </div>
+                <img class="isometric1" src="/static/img/isometric1.png" alt="isometric1" />
+            </div>
+        
+            <div class="menubox">
+                <h1 class="menuh1">This weeks specials</h1>
+                <div class="menucard">
+                    <div class="menucard-item active" id="all">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/star--v2.png"/>
+                        <p>All</p>
+                    </div>
+                    <div class="menucard-item" id="snacks">
+                        <img src="https://img.icons8.com/fluency-systems-regular/50/000000/kawaii-taco.png"/>
+                        <p>Snacks</p>
+                    </div>
+                    <div class="menucard-item" id="noodles">
+                        <img src="https://img.icons8.com/fluency-systems-regular/50/000000/kawaii-noodle.png"/>
+                        <p>Noodles</p>
+                    </div>
+                    <div class="menucard-item" id="ricebowl">
+                        <img src="https://img.icons8.com/fluency-systems-regular/50/000000/rice-bowl--v1.png"/>
+                        <p>Rice Bowl</p>
+                    </div>
+                    <div class="menucard-item" id="drinks">
+                        <img src="https://img.icons8.com/fluency-systems-regular/50/000000/kawaii-soda.png"/>
+                        <p>Drinks</p>
+                    </div>
+                </div>
+                <div class="item-container" id="itemcontainer">
+                </div>
+                
+
+            </div>
         </div>
-        <img class="isometric1" src="/static/img/isometric1.png" alt="isometric1" />
-    </div>
 
-    <div class="menubox">
-        <h1 class="menuh1">This weeks specials</h1>
+        <div class="rightmaincontent">
+            <div class="loctimebox">
+                <div class="row1">
+                    <p>Location</p>
+                    <div class="inputbox">
+                        <img src="/static/img/searchicon.png" class="searchicon" />
+                        <input type="text" id="dorm">
+                    </div>
+                </div>
 
-        <div class="slider">
-            <input type="radio" name="testimonial" id="t-1"/>
-            <input type="radio" name="testimonial" id="t-2"/>
-            <input type="radio" name="testimonial" id="t-3" checked/>
-            <input type="radio" name="testimonial" id="t-4"/>
-            <input type="radio" name="testimonial" id="t-5"/>
+                <div class="row2">
+                    <div class="clockbox">
+                        <img src="/static/img/clock.png" class="clockicon" />
+                    </div>
+                    
+                    <p>Now</p>
 
-            <div class="testimonials" id="menu">
-                <!--
-                <label class="item" for="t-1" id="testfood1">
-                    <img src='/static/img/testfood1.png' alt="picture"/>
-                    <p>testfood 1</p>
-                    <a href="#0" class="bttn-two">Order</a>
-                </label>
-                <label class="item" for="t-2" id="testfood2">
-                    <img src='/static/img/testfood2.png' alt="picture"/>
-                    <p>testfood 2</p>
-                    <a href="#0" class="bttn-two">Order</a>
-                </label>
-                <label class="item" for="t-3" id="testfood3">
-                    <img src='/static/img/testfood3.png' alt="picture"/>
-                    <p>testfood 3</p>
-                    <a href="#0" class="bttn-two">Order</a>
-                </label>
-                <label class="item" for="t-4" id="testfood4">
-                    <img src='/static/img/testfood4.png' alt="picture"/>
-                    <p>testfood 4</p>
-                    <a href="#0" class="bttn-two">Order</a>
-                </label>
-                <label class="item" for="t-5" id="testfood5">
-                    <img src='/static/img/testfood5.png' alt="picture"/>
-                    <p>testfood 5</p>
-                    <a href="#0" class="bttn-two">Order</a>
-                </label>
-                -->
-
-                <div class="loader">
-                    <div class="square" id="sq1"></div>
-                    <div class="square" id="sq2"></div>
-                    <div class="square" id="sq3"></div>
-                    <div class="square" id="sq4"></div>
-                    <div class="square" id="sq5"></div>
-                    <div class="square" id="sq6"></div>
-                    <div class="square" id="sq7"></div>
-                    <div class="square" id="sq8"></div>
-                    <div class="square" id="sq9"></div>
+                    <a>Change</a>
+                    
                 </div>
             </div>
-
+            <hr style="width:100%">
             
-            <div class="dots">
-                <label for="t-1"></label>
-                <label for="t-2"></label>
-                <label for="t-3"></label>
-                <label for="t-4"></label>
-                <label for="t-5"></label>
+
+            <div class="ordercontainer" id="ordercontainer">
+                 
+            </div>
+            <div class="deliverybox">
+                <div class="carbox">
+                    <img src="/static/img/car.png" class="caricon" />
+                </div>
+                <p style="margin:0% 35% 0% 5%;">Delivery</p>
+                <p>$0.00</p>
+            </div> 
+            <div class="clear_button_box">
+                <button id="clear">clear</button>
+            </div>
+
+            <div class="checkoutbox">
+                <div class="totalbox">
+                    <p>Total: </p>
+                    <h2 id="total">$10.00</h2>
+                </div>
+                <hr style="width:100%">
+                <div class="checkoutbuttonbox">
+                    <div class="leftcheckout">
+
+                    </div>
+                    <div class="rightcheckout">
+
+                    </div>
+                </div>
             </div>
         </div>
 
-        
     </div>
 
     <div class="signoutbox">
         <p id="username"></p>
         <a class="signoutbutton" id="signout">Sign out</a>
     </div>
-
    
 </body>
 </html>

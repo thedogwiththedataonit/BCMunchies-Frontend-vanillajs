@@ -14,6 +14,7 @@ def init_items():
             "id": "testfood1",
             "name": "testfood1",
             "price": "10.00",
+            "category": "noodles",
             "img": "testfood1.png",
             "description": "testfood1",
         },
@@ -21,6 +22,7 @@ def init_items():
             "id": "testfood2",
             "name": "testfood2",
             "price": "10.00",
+            "category": "noodles",
             "img": "testfood2.png",
             "description": "testfood2",
         },
@@ -28,6 +30,7 @@ def init_items():
             "id": "testfood3",
             "name": "testfood3",
             "price": "10.00",
+            "category": "snacks",
             "img": "testfood3.png",
             "description": "testfood3",
         },
@@ -35,6 +38,7 @@ def init_items():
             "id": "testfood4",
             "name": "testfood4",
             "price": "10.00",
+            "category": "ricebowl",
             "img": "testfood4.png",
             "description": "testfood4",
         },
@@ -42,6 +46,7 @@ def init_items():
             "id": "testfood5",
             "name": "testfood5",
             "price": "10.00",
+            "category": "noodles",
             "img": "testfood5.png",
             "description": "testfood5",
         }])
@@ -62,4 +67,4 @@ def get_items():
 
 
 #print(init_items())
-#print(get_items())
+print(get_items())

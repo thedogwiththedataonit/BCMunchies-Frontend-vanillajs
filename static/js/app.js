@@ -148,13 +148,8 @@ jQuery(document).ready(function($){
     });
   };
 
-// GOOGLE
 
-//when loginbtn is clicked, grab signin-email and signin-password
-//add eventlistener to loginbtn
-//when loginbtn is clicked, grab signin-email and signin-password
-//add eventlistener to loginbtn
-
+  
 function signinEmail(){
     var email = document.getElementById("signin-email").value;
     var password = document.getElementById("signin-password").value;
@@ -195,68 +190,164 @@ function signupEmail(){
     promise.catch(e => console.log(e.message));
 }
 
+async function getCategory(category){
+  //search local storage for menu
+  var menu = JSON.parse(localStorage.getItem("menu"));
+  var categoryMenu = [];
+  //loop through menu
+  for(var i = 0; i < menu.length; i++){
+    //if menu category matches category
+    if (category == "all"){
+      categoryMenu.push(menu[i]);
+    }
+    if(menu[i].category == category){
+      //push to categoryMenu
+      categoryMenu.push(menu[i]);
+    }
+  }
+  var itemcontainer = document.getElementById("itemcontainer");
+  itemcontainer.innerHTML = "";
+  
+  for (var i = 0; i < categoryMenu.length; i++){
+      await delay(150);
+      var foodItem = document.createElement("div");
+      foodItem.className = "food-item";
+      foodItem.id = "food-item" + i;
+      foodItem.innerHTML = `<div class="food-item-img">
+                                <img src="/static/img/${categoryMenu[i].img}">
+                            </div> 
+                            <div class="food-item-text">
+                                <h3>${categoryMenu[i].name}</h3>
+                                <i>${categoryMenu[i].description}</i>
+                            </div>
+                            <div class="food-item-add">
+                                <p>$${categoryMenu[i].price}</p>
+                                <a class="bttn-two2" onclick="addToCart('${categoryMenu[i].id}')">Add to Cart</a>
+                            </div>`;
+      //append foodItem to itemContainer
+      
+      itemcontainer.appendChild(foodItem);
+    
+      }
+  
+  return categoryMenu;
+}
 
-//onload, wait for function call to /menu 
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
 
-body = document.getElementsByTagName("body");
-body[0].onload = function(){
+function query_items(){
   fetch("/api/menu").then(function(response){
     return response.json();
   }
   ).then(function(data){
-    console.log(data);
+    //store data in local storage
+    localStorage.setItem("menu", JSON.stringify(data));
 
-    //for length in data, create a label 
-    
     for(var i = 0; i < data.length; i++){
-      var label = document.createElement("label");
-      label.setAttribute("for", `t-${i+1}`);
-      label.setAttribute("class", "item");
-      label.setAttribute("id", data[i].id);
-
-      label.innerHTML = `<img src="/static/img/${data[i].img}"/><p>${data[i].name}</p><a class="bttn-two" onclick="addtocart('${data[i].id}')">Add</a>`;
-
-      //append label to menu
-      document.getElementById("menu").appendChild(label);
+      var itemcontainer = document.getElementById("itemcontainer");
+      //create a div with class "food-item" and id="food-item[i]"
+      var foodItem = document.createElement("div");
+      foodItem.className = "food-item";
+      foodItem.id = data[i].name;
+      foodItem.innerHTML = `<div class="food-item-img">
+                                <img src="/static/img/${data[i].img}">
+                            </div> 
+                            <div class="food-item-text">
+                                <h3>${data[i].name}</h3>
+                                <i>${data[i].description}</i>
+                            </div>
+                            <div class="food-item-add">
+                                <p>$${data[i].price}</p>
+                                <a class="bttn-two2" onclick="addToCart('${data[i].id}')">Add to Cart</a>
+                            </div>`;
+      //append foodItem to itemContainer
+      itemcontainer.appendChild(foodItem);
     }
-    
   }
   ).catch(function(error){
     console.log(error);
   });
 
-  var current_cart = localStorage.getItem('cart');
-  console.log(current_cart);
-  var cartnum = document.getElementById("cartnum");
+  //get current cart from local storage and display it in object
+  cartload();
+}
+
+async function cartload(){
+  var current_cart = JSON.parse(localStorage.getItem("cart"));
+
   if(current_cart == null){
+    var cartnum = document.getElementById("cartnum");
     cartnum.innerText = 0;
-    return 0;
+    return;
   }
   else{
-    current_cart = JSON.parse(current_cart);
-    var cartvaluenum = 0;
-    for(var i = 0; i < current_cart.length; i++){
-      cartvaluenum += current_cart[i].qty;
+    var ordercontainer = document.getElementById("ordercontainer");
+    var menu = JSON.parse(localStorage.getItem("menu"));
+    console.log(menu)
+  //loop through cart
+    for (var i = 0; i < current_cart.length; i++){
+      var item_id = current_cart[i].id;
+      var item_count = current_cart[i].qty;
+      console.log(item_id);
+      console.log(item_count);
+
+
+      for (var j = 0; j < menu.length; j++){
+        //if id matches menu id
+        if(menu[j].id == item_id){
+          var item_img = menu[j].img;
+          console.log(item_img);
+          var item_name = menu[j].name;
+          var item_price = menu[j].price;
+        
+          var orderitem = document.createElement("div");
+          orderitem.className = "itemrow";
+          orderitem.id = item_id + "_order";
+          orderitem.innerHTML = `<div class="content">
+                                    <img class="itemimg" src="/static/img/${item_img}"/>
+                                    <div class="counterbox">
+                                        <img src="https://img.icons8.com/windows/20/000000/minus.png" onClick="minusItem('${item_id}')"/>
+                                        <h3 id="itemcount_${item_id}">${item_count}</h3>
+                                        <img src="https://img.icons8.com/windows/20/000000/plus.png" onClick="plusItem('${item_id}')"/>
+                                    </div>
+                                    
+                                    <h2>${item_name}</h2>
+                                    <p>${item_price}</p>
+                                </div>`;
+          await delay(250);
+          ordercontainer.appendChild(orderitem);
+        }
+      }
+
     }
-    cartnum.innerText = cartvaluenum;
-    return cartvaluenum;
   }
 }
 
 
-const mainlogin = document.getElementById("mainlogin");
-mainlogin.addEventListener("click", function(){
-  document.getElementById("loginmodal").className = "user-modal is-visible";
-  //click on sign in tab
-  document.getElementById("tab-signin").click();
-}
-);
 
-function addtocart(id){
+
+function addToCart(id){
+  console.log(id)
   var current_cart = localStorage.getItem('cart');
-
+  var ordercontainer = document.getElementById("ordercontainer");
   var cartnum = document.getElementById("cartnum");
   cartnum.innerText = parseInt(cartnum.innerText) + 1;
+
+  var item_id = id;
+  var menu = JSON.parse(localStorage.getItem("menu"));
+  
+  //loop through menu
+  for(var i = 0; i < menu.length; i++){
+    console.log(menu[i]);
+    //if id matches menu id
+    if(menu[i].id == item_id){
+      var item_img = menu[i].img;
+      var item_name = menu[i].name;
+      var item_price = menu[i].price;
+    }
+  }
 
   var itemnotif = document.getElementById("itemaddedpopup");
   itemnotif.className = "itemaddedpopup visible";
@@ -264,30 +355,290 @@ function addtocart(id){
     itemnotif.className = "itemaddedpopup";
   }, 2000);
 
-  
-
   if(current_cart == null){
     current_cart = [
       {'id': id, 'qty': 1}
     ];
     localStorage.setItem('cart', JSON.stringify(current_cart));
+    
+    var orderitem = document.createElement("div");
+    orderitem.className = "itemrow";
+    //id name is item_id
+    orderitem.id = item_id + "_order";
+    orderitem.innerHTML = `<div class="content">
+                              <img class="itemimg" src="/static/img/${item_img}"/>
+                              <div class="counterbox">
+                                  <img src="https://img.icons8.com/windows/20/000000/minus.png" onClick="minusItem('${item_id}')"/>
+                                  <h3 id="itemcount_${item_id}">1</h3>
+                                  <img src="https://img.icons8.com/windows/20/000000/plus.png" onClick="plusItem('${item_id}')"/>
+                              </div>
+                              
+                              <h2>${item_name}</h2>
+                              <p>${item_price}</p>
+                          </div>`;
+    ordercontainer.appendChild(orderitem);
   }
   else{
     current_cart = JSON.parse(current_cart);
     var found = false;
+    var itemcount = document.getElementById("itemcount_" + id);
+
     for(var i = 0; i < current_cart.length; i++){
       if(current_cart[i].id == id){
         current_cart[i].qty++;
         found = true;
         localStorage.setItem('cart', JSON.stringify(current_cart));
+        itemcount.innerText = current_cart[i].qty;
+
       }
     }
     if(!found){
       current_cart.push({'id': id, 'qty': 1});
       localStorage.setItem('cart', JSON.stringify(current_cart));
-    }
 
+      var orderitem = document.createElement("div");
+      orderitem.className = "itemrow";
+      orderitem.id = item_id + "_order";
+      orderitem.innerHTML = `<div class="content">
+                                <img class="itemimg" src="/static/img/${item_img}"/>
+                                <div class="counterbox">
+                                    <img src="https://img.icons8.com/windows/20/000000/minus.png" onclick="minusItem('${item_id}')"/>
+                                    <h3 id="itemcount_${item_id}">1</h3>
+                                    <img src="https://img.icons8.com/windows/20/000000/plus.png" onclick="plusItem('${item_id}')"/>
+                                </div>
+                                
+                                <h2>${item_name}</h2>
+                                <p>${item_price}</p>
+                            </div>`;
+      ordercontainer.appendChild(orderitem);
+      }
   }
-  
+
+
+
 }
 
+function autocomplete(inp, arr) {
+                /*the autocomplete function takes two arguments,
+                the text field element and an array of possible autocompleted values:*/
+                var currentFocus;
+                /*execute a function when someone writes in the text field:*/
+                inp.addEventListener("input", function(e) {
+                    var a, b, i, val = this.value;
+                    /*close any already open lists of autocompleted values*/
+                    closeAllLists();
+                    if (!val) { return false;}
+                    currentFocus = -1;
+                    /*create a DIV element that will contain the items (values):*/
+                    a = document.createElement("DIV");
+                    a.setAttribute("id", this.id + "autocomplete-list");
+                    a.setAttribute("class", "autocomplete-items");
+                    /*append the DIV element as a child of the autocomplete container:*/
+                    this.parentNode.appendChild(a);
+                    /*for each item in the array...*/
+                    for (i = 0; i < arr.length; i++) {
+                      /*check if the item starts with the same letters as the text field value:*/
+                      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        /*create a DIV element for each matching element:*/
+                        b = document.createElement("DIV");
+                        /*make the matching letters bold:*/
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        /*execute a function when someone clicks on the item value (DIV element):*/
+                            b.addEventListener("click", function(e) {
+                            /*insert the value for the autocomplete text field:*/
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            /*close the list of autocompleted values,
+                            (or any other open lists of autocompleted values:*/
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                      }
+                    }
+                });
+                /*execute a function presses a key on the keyboard:*/
+                inp.addEventListener("keydown", function(e) {
+                    var x = document.getElementById(this.id + "autocomplete-list");
+                    if (x) x = x.getElementsByTagName("div");
+                    if (e.keyCode == 40) {
+                      /*If the arrow DOWN key is pressed,
+                      increase the currentFocus variable:*/
+                      currentFocus++;
+                      /*and and make the current item more visible:*/
+                      addActive(x);
+                    } else if (e.keyCode == 38) { //up
+                      /*If the arrow UP key is pressed,
+                      decrease the currentFocus variable:*/
+                      currentFocus--;
+                      /*and and make the current item more visible:*/
+                      addActive(x);
+                    } else if (e.keyCode == 13) {
+                      /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                      e.preventDefault();
+                      if (currentFocus > -1) {
+                        /*and simulate a click on the "active" item:*/
+                        if (x) x[currentFocus].click();
+                      }
+                    }
+                });
+                function addActive(x) {
+                  /*a function to classify an item as "active":*/
+                  if (!x) return false;
+                  /*start by removing the "active" class on all items:*/
+                  removeActive(x);
+                  if (currentFocus >= x.length) currentFocus = 0;
+                  if (currentFocus < 0) currentFocus = (x.length - 1);
+                  /*add class "autocomplete-active":*/
+                  x[currentFocus].classList.add("autocomplete-active");
+                }
+                function removeActive(x) {
+                  /*a function to remove the "active" class from all autocomplete items:*/
+                  for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                  }
+                }
+                function closeAllLists(elmnt) {
+                  /*close all autocomplete lists in the document,
+                  except the one passed as an argument:*/
+                  var x = document.getElementsByClassName("autocomplete-items");
+                  for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                  }
+                }
+              }
+              /*execute a function when someone clicks in the document:*/
+              document.addEventListener("click", function (e) {
+                  closeAllLists(e.target);
+              });
+              }
+              
+function plusItem(id){
+  //loop through local storage cart
+  var current_cart = JSON.parse(localStorage.getItem('cart'));
+  console.log(current_cart)
+  console.log(id)
+  var found = false;
+  for(var i = 0; i < current_cart.length; i++){
+      if(current_cart[i].id == id){
+          //update local storage
+          current_cart[i].qty++;
+          found = true;
+          localStorage.setItem('cart', JSON.stringify(current_cart));
+          var itemcount = document.getElementById(`itemcount_${id}`);
+          itemcount.innerHTML = current_cart[i].qty;
+          var cartnum = document.getElementById('cartnum');
+          plusone = cartnum.innerText + 1;
+          cartnum.innerText = plusone;
+      }
+  }
+}
+
+function minusItem(id){
+  //loop through local storage cart
+  var current_cart = JSON.parse(localStorage.getItem('cart'));
+  var found = false;
+  for(var i = 0; i < current_cart.length; i++){
+      if(current_cart[i].id == id){
+          //update local storage
+          current_cart[i].qty--;
+          found = true;
+          localStorage.setItem('cart', JSON.stringify(current_cart));
+          var itemcount = document.getElementById(`itemcount_${id}`);
+          itemcount.innerHTML = current_cart[i].qty;
+
+          var cartnum = document.getElementById('cartnum');
+          minusone = cartnum.innerText - 1;
+          cartnum.innerText = minusone;
+        
+
+
+          if (current_cart[i].qty == 0){
+              document.getElementById(`${id}_order`).remove();
+              
+              //remove current_cart[i] from current_cart
+              current_cart.splice(i, 1);
+              localStorage.setItem('cart', JSON.stringify(current_cart));
+              //remove item from cart
+              //remove the html element 
+              
+          }
+      }
+  }
+}
+//const
+
+const allItems = document.getElementById("all");
+const allSnacks = document.getElementById("snacks");
+const allNoodles = document.getElementById("noodles");
+const allRicebowl = document.getElementById("ricebowl");
+const allDrinks = document.getElementById("drinks");
+const clear = document.getElementById("clear");
+const dorms_list = ["Fenwick", "66 Commonwealth Avenue", "Cheverus", "Claver", "Cushing", "Duchesne", "Fitzpatrick",
+"Gabelli", "Gonzaga", "Greycliff", "Hardey", "Ignacio", "Keyes", "Kostka", "Loyola", "Medeiros",
+"Mods", "Ninety St. Thomas More", "2k", "Roncalli", "Rubenstein", "Shaw", "Stayer", "Thomas More Apartments",
+"2150", "Vanderslice", "Voute", "Walsh", "Welch", "Williams", "Xavier" ]
+
+autocomplete(document.getElementById("dorm"), dorms_list);
+
+body = document.getElementsByTagName("body");
+body[0].onload = query_items();
+
+clear.addEventListener("click", function(){
+  //clear cart in local storage
+  localStorage.removeItem('cart');
+  //clear id="ordercontainer"
+  var ordercontainer = document.getElementById("ordercontainer");
+  ordercontainer.innerHTML = "";
+})
+
+//add eventlistener to all
+allItems.addEventListener("click", function(){
+  allItems.classList.add('active');
+  allSnacks.classList.remove('active');
+  allNoodles.classList.remove('active');
+  allRicebowl.classList.remove('active');
+  allDrinks.classList.remove('active');
+  getCategory("all");
+});
+allSnacks.addEventListener("click", function(){
+  allItems.classList.remove('active');
+  allSnacks.classList.add('active');
+  allNoodles.classList.remove('active');
+  allRicebowl.classList.remove('active');
+  allDrinks.classList.remove('active');
+  getCategory("snacks");
+});
+allNoodles.addEventListener("click", function(){
+  allItems.classList.remove('active');
+  allSnacks.classList.remove('active');
+  allNoodles.classList.add('active');
+  allRicebowl.classList.remove('active');
+  allDrinks.classList.remove('active');
+  getCategory("noodles");
+});
+allRicebowl.addEventListener("click", function(){
+  allItems.classList.remove('active');
+  allSnacks.classList.remove('active');
+  allNoodles.classList.remove('active');
+  allRicebowl.classList.add('active');
+  allDrinks.classList.remove('active');
+  getCategory("ricebowl");
+});
+allDrinks.addEventListener("click", function(){
+  allItems.classList.remove('active');
+  allSnacks.classList.remove('active');
+  allNoodles.classList.remove('active');
+  allRicebowl.classList.remove('active');
+  allDrinks.classList.add('active');
+  getCategory("drinks");
+});
+
+const mainlogin = document.getElementById("mainlogin");
+mainlogin.addEventListener("click", function(){
+  document.getElementById("loginmodal").className = "user-modal is-visible";
+  //click on sign in tab
+  document.getElementById("tab-signin").click();
+});
