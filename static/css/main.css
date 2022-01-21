@@ -26,6 +26,8 @@ body {
   align-items: center;
   z-index: 100;
   position: fixed;
+  animation-duration: 2s;
+  animation-name: loader;
 }
 .maincontent {
   width: 100%;
@@ -63,7 +65,7 @@ body {
   box-shadow: rgb(63, 63, 63) 0px 1px 0px;
   padding: 5% 0 5% 0;
   animation-duration: 4s;
-    animation-name: fadein;
+  animation-name: fadein;
 }
 .menucard-item {
   width: 12%;
@@ -109,6 +111,8 @@ body {
   z-index: 00;
   margin: 35% 0 5% 0;
   border-radius: 30px;
+  animation-duration: 3s;
+  animation-name: loader;
 }
 .row1,
 .row2 {
@@ -476,10 +480,10 @@ input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 }
 
 @keyframes loader {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  75% {
     opacity: 1;
   }
 }
@@ -728,6 +732,8 @@ input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   right: 450px;
   top: 170px;
   z-index: 10;
+  animation-duration: 3s;
+  animation-name: loader;
 }
 .menubox {
   width: 100%;
@@ -746,7 +752,7 @@ input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   letter-spacing: -1px;
   margin-bottom: 15px;
   animation-duration: 3s;
-    animation-name: fadein;
+  animation-name: fadein;
 }
 
 .slider {
